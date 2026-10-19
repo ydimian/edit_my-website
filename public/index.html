@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Site editor · youhannad.com</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap">
+  <link rel="stylesheet" href="/app.css">
+  <script type="module" src="/js/main.js"></script>
+</head>
+<body>
+  <!-- ============================== TOP BAR ============================== -->
+  <header class="topbar">
+    <div class="topbar__brand">
+      <svg class="topbar__logo" viewBox="28 44 760 760" aria-hidden="true"><g fill="none" stroke="currentColor"><circle cx="408" cy="424" r="367" stroke-width="34"/><circle cx="408" cy="424" r="271" stroke-width="30"/></g><g fill="none" stroke="#c2a67d"><rect x="294" y="306" width="228" height="236" stroke-width="26"/><path d="M325 393.7H491M325 454.3H491M380 333V515M436 333V515" stroke-width="18"/></g></svg>
+      <span class="topbar__title">Site editor</span>
+      <span class="status-chip" id="status-chip" data-state="loading">Loading…</span>
+    </div>
+    <div class="topbar__actions">
+      <button class="btn btn--ghost" id="btn-menu" type="button" aria-haspopup="menu" aria-expanded="false" title="More">More ▾</button>
+      <div class="menu" id="menu" role="menu" hidden>
+        <button role="menuitem" type="button" id="menu-undo">Undo unsaved changes</button>
+        <button role="menuitem" type="button" id="menu-discard">Discard saved draft…</button>
+        <a role="menuitem" id="menu-live" href="https://youhannad.com" target="_blank" rel="noopener">Open live site ↗</a>
+        <a role="menuitem" href="/preview/latest/" target="_blank" rel="noopener">Open draft preview ↗</a>
+      </div>
+      <button class="btn btn--ghost" id="btn-save" type="button" disabled title="Save to your private draft (Ctrl+S)">Save draft</button>
+      <button class="btn btn--accent" id="btn-release" type="button" disabled title="Publish the saved draft to youhannad.com">Release</button>
+    </div>
+  </header>
+
+  <div class="banner" id="banner" hidden></div>
+
+  <!-- ============================== WORKSPACE ============================== -->
+  <div class="workspace">
+    <section class="editor" aria-label="Editor">
+      <nav class="tabs" role="tablist" aria-label="Sections">
+        <button role="tab" type="button" data-tab="text" aria-selected="true">Text</button>
+        <button role="tab" type="button" data-tab="photos" aria-selected="false">Photos</button>
+        <button role="tab" type="button" data-tab="theme" aria-selected="false">Colours</button>
+        <button class="tabs__preview-toggle" type="button" id="btn-show-preview">Preview</button>
+      </nav>
+      <div class="panel" id="panel-text" role="tabpanel"></div>
+      <div class="panel" id="panel-photos" role="tabpanel" hidden></div>
+      <div class="panel" id="panel-theme" role="tabpanel" hidden></div>
+    </section>
+
+    <section class="preview" aria-label="Preview">
+      <div class="preview__bar">
+        <div class="seg" role="group" aria-label="Page">
+          <button type="button" data-page="index.html" aria-pressed="true">Home</button>
+          <button type="button" data-page="photography.html" aria-pressed="false">Photography</button>
+        </div>
+        <div class="seg" role="group" aria-label="Colour mode">
+          <button type="button" data-mode="dark" aria-pressed="true">Dark</button>
+          <button type="button" data-mode="light" aria-pressed="false">Light</button>
+        </div>
+        <div class="seg" role="group" aria-label="Width">
+          <button type="button" data-width="desktop" aria-pressed="true">Desktop</button>
+          <button type="button" data-width="mobile" aria-pressed="false">Phone</button>
+        </div>
+        <span class="preview__note" id="preview-note"></span>
+        <button class="btn btn--ghost btn--sm preview__close" type="button" id="btn-hide-preview">Close</button>
+      </div>
+      <div class="preview__stage">
+        <iframe id="preview-frame" title="Draft preview" src="about:blank"></iframe>
+      </div>
+    </section>
+  </div>
+
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+</body>
+</html>

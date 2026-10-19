@@ -1,0 +1,21 @@
+{
+  "name": "edit-my-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Private editor for youhannad.com: edit text, photos and colours, preview a draft, then release.",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev --port 8790 --local-upstream localhost:8790",
+    "deploy": "wrangler deploy",
+    "test": "node --test test/*.test.mjs",
+    "mock-github": "node test/mock-github.mjs"
+  },
+  "devDependencies": {
+    "parse5": "^7.3.0",
+    "wrangler": "^4.151.2"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true,
+    "workerd@1.20261019.1": true
+  }
+}

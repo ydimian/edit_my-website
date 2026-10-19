@@ -1,0 +1,34 @@
+// edit.youhannad.com — private editor for youhannad.com.
+// Deploys automatically from GitHub (Cloudflare Workers Builds).
+{
+  "name": "edit-youhannad",
+  "main": "src/worker.js",
+  "compatibility_date": "2025-10-01",
+
+  // Only reachable at edit.youhannad.com (Cloudflare creates the DNS record on deploy).
+  "workers_dev": false,
+  "preview_urls": false,
+  "routes": [{ "pattern": "edit.youhannad.com", "custom_domain": true }],
+
+  // The editor app. run_worker_first: every request is authenticated before any file is served.
+  "assets": { "directory": "./public", "binding": "ASSETS", "run_worker_first": true },
+
+  "vars": {
+    "GITHUB_OWNER": "ydimian",
+    "GITHUB_REPO": "my-portfolio-yd",
+    "LIVE_BRANCH": "main",
+    "DRAFT_BRANCH": "draft",
+    "LIVE_URL": "https://youhannad.com",
+
+    // Who may edit, and the Cloudflare Access app that guards the editor.
+    // ACCESS_TEAM_DOMAIN: e.g. "youhannad.cloudflareaccess.com"
+    // ACCESS_AUD: the Access application's "Application Audience (AUD) Tag"
+    // Until both are set, the editor stays locked.
+    "OWNER_EMAIL": "ydimian05@gmail.com",
+    "ACCESS_TEAM_DOMAIN": "",
+    "ACCESS_AUD": ""
+  },
+  // GITHUB_TOKEN is a secret: set it in the Cloudflare dashboard, never here.
+
+  "observability": { "enabled": true }
+}
