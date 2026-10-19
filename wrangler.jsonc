@@ -23,10 +23,10 @@
     // Who may edit, and the Cloudflare Access app that guards the editor.
     // ACCESS_TEAM_DOMAIN: e.g. "youhannad.cloudflareaccess.com"
     // ACCESS_AUD: the Access application's "Application Audience (AUD) Tag"
-    // Until both are set, the editor stays locked.
+    // Until both are set, the editor stays locked. (Access app: "Site editor", policy "Only Youhanna")
     "OWNER_EMAIL": "ydimian05@gmail.com",
-    "ACCESS_TEAM_DOMAIN": "",
-    "ACCESS_AUD": ""
+    "ACCESS_TEAM_DOMAIN": "sparkling-heart-4cbc.cloudflareaccess.com",
+    "ACCESS_AUD": "7189d90ab6eb3a971391b932173dcfb0c514e3ea360200b453921d56a9225dea"
   },
   // GITHUB_TOKEN is a secret: set it in the Cloudflare dashboard, never here.
 
