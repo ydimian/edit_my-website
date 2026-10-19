@@ -19,10 +19,10 @@ export class GitHubError extends Error {
 
 export class Repo {
   constructor(env) {
-    if (!env.GITHUB_TOKEN) throw new GitHubError("GITHUB_TOKEN is not set: add it as a secret on this Worker", 503);
+    if (!String(env.GITHUB_TOKEN || "").trim()) throw new GitHubError("GITHUB_TOKEN is not set: add it as a secret on this Worker", 503);
     this.api = (env.GITHUB_API || "https://api.github.com").replace(/\/$/, "");
     this.base = `/repos/${env.GITHUB_OWNER}/${env.GITHUB_REPO}`;
-    this.token = env.GITHUB_TOKEN;
+    this.token = String(env.GITHUB_TOKEN).trim(); // pasted secrets often carry a stray space or newline
     this.live = env.LIVE_BRANCH || "main";
     this.draft = env.DRAFT_BRANCH || "draft";
   }
@@ -42,6 +42,9 @@ export class Repo {
     if (res.status === 204) return null;
     if (!res.ok) {
       const detail = await res.json().catch(() => ({}));
+      if (res.status === 401) {
+        throw new GitHubError("GitHub rejected the GITHUB_TOKEN secret (expired, regenerated or mistyped). Make a new token and save it again in Cloudflare.", 502);
+      }
       throw new GitHubError(`GitHub ${method} ${path}: ${res.status} ${detail.message || res.statusText}`, res.status);
     }
     return raw ? res : res.json();

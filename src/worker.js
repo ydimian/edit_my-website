@@ -59,7 +59,9 @@ async function api(request, env, url, user) {
       dev: Boolean(user.dev),
       repo: `${env.GITHUB_OWNER}/${env.GITHUB_REPO}`,
       liveUrl: env.LIVE_URL || null,
-      tokenConfigured: Boolean(env.GITHUB_TOKEN),
+      tokenConfigured: Boolean(String(env.GITHUB_TOKEN || "").trim()),
+      // Shape only, never the value: helps spot a bad paste
+      tokenShape: tokenShape(env.GITHUB_TOKEN),
     });
   }
 
@@ -126,6 +128,14 @@ function describe(change, files) {
   if (Object.keys(change.images || {}).length) parts.push("page images");
   if (change.theme) parts.push("colours");
   return `Editor: ${parts.join(", ") || `${files.length} file(s)`}`;
+}
+
+/** "fine-grained, 93 chars" etc., without revealing the token. */
+function tokenShape(raw) {
+  const s = String(raw || "");
+  const t = s.trim();
+  const kind = /^github_pat_/.test(t) ? "fine-grained" : /^gh[pousr]_/.test(t) ? "classic" : "unrecognised";
+  return { kind, length: t.length, extraWhitespace: s !== t, plainCharacters: /^[A-Za-z0-9_]*$/.test(t) };
 }
 
 /* ---------- responses ---------- */
